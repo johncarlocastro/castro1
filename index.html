@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <!-- Google Fonts for Romantic Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'torta';
+            background: linear-gradient(to bottom, #ff69b4, #ffb6c1);
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            width: 100%;
+            height: 100px; /* Give space for button movement */
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Arial', sans-serif; /* Keep buttons in a readable font */
+        }
+        #yes {
+            background: #4CAF50;
+            color: white;
+        }
+        #yes:hover {
+            background: #45a049;
+        }
+        #no {
+            background: #f44336;
+            color: white;
+            transition: all 0.5s ease; /* Smooth movement */
+        }
+        #no:hover {
+            background: #da190b;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            display: none;
+        }
+        /* Heart Animation Styles */
+        .heart {
+            position: absolute;
+            color: #ff1493;
+            font-size: 2em;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .heart:nth-child(odd) {
+            animation-delay: -2s;
+        }
+        .heart:nth-child(even) {
+            animation-delay: -4s;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+
+
+   
+
+
+        }
+        /* Second Page Styles */
+        .second-page {
+            display: none;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        .appreciation {
+            flex: 1;
+            font-size: 1.8em;
+            margin-right: 20px;
+            text-align: left;
+        }
+        .images {
+            flex: 1;
+            position: relative;
+            height: 400px;
+            width: 400px;
+        }
+        .image {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            animation: toCircle 6s ease-in-out forwards;
+        }
+        /* Initial positions (all start from bottom center) */
+        .image:nth-child(1), .image:nth-child(2), .image:nth-child(3), .image:nth-child(4), .image:nth-child(5), .image:nth-child(6) {
+            left: 50%;
+            top: 100%;
+        }
+        /* Circle shape positions (radius 150px, center at 200px, 200px) */
+        .image:nth-child(1) { animation: toCircle1 6s ease-in-out forwards; }
+        .image:nth-child(2) { animation: toCircle2 6s ease-in-out forwards; }
+        .image:nth-child(3) { animation: toCircle3 6s ease-in-out forwards; }
+        .image:nth-child(4) { animation: toCircle4 6s ease-in-out forwards; }
+        .image:nth-child(5) { animation: toCircle5 6s ease-in-out forwards; }
+        .image:nth-child(6) { animation: toCircle6 6s ease-in-out forwards; }
+        @keyframes toCircle1 {
+            0% { transform: translate(-50%, 0); } /* Center at start */
+            100% { transform: translate(150px, -200px); } /* 0 degrees: (350,200) relative to center */
+        }
+        @keyframes toCircle2 {
+            0% { transform: translate(-50%, 0); }
+            100% { transform: translate(75px, -70px); } /* 60 degrees: approx (275,330) */
+        }
+        @keyframes toCircle3 {
+            0% { transform: translate(-50%, 0); }
+            100% { transform: translate(-75px, -70px); } /* 120 degrees: approx (125,330) */
+        }
+        @keyframes toCircle4 {
+            0% { transform: translate(-50%, 0); }
+            100% { transform: translate(-150px, -200px); } /* 180 degrees: (50,200) */
+        }
+        @keyframes toCircle5 {
+            0% { transform: translate(-50%, 0); }
+            100% { transform: translate(-75px, -330px); } /* 240 degrees: approx (125,70) */
+        }
+        @keyframes toCircle6 {
+            0% { transform: translate(-50%, 0); }
+            100% { transform: translate(75px, -330px); } /* 300 degrees: approx (275,70) */
+        }
+        /* Music Iframe Styles */
+        #musicPlayer {
+            display: none; /* Hidden, plays in background */
+            position: absolute;
+            top: -1000px; /* Off-screen */
+        }
+    </style>
+</head>
+<body>
+    <!-- First Page -->
+    <div id="first-page">
+        <!-- Floating Hearts Animation -->
+        <div class="heart" style="left: 10%;">❤️</div>
+        <div class="heart" style="left: 20%;">💖</div>
+        <div class="heart" style="left: 30%;">💕</div>
+        <div class="heart" style="left: 40%;">💗</div>
+        <div class="heart" style="left: 50%;">💓</div>
+        <div class="heart" style="left: 60%;">💘</div>
+        <div class="heart" style="left: 70%;">💞</div>
+        <div class="heart" style="left: 80%;">💝</div>
+        <div class="heart" style="left: 90%;">💟</div>
+
+
+        <h1>Will You Be My Valentine?</h1>
+        <p>Hi [Mica Jhen Santos], you've stolen my heart. Will you be mine this Valentine's Day?</p>
+        <div class="buttons">
+            <button id="yes">Yes</button>
+            <button id="no">No</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+
+    <!-- Second Page -->
+    <div id="second-page" class="second-page">
+        <div class="appreciation">
+            Thank you for saying yes! You make my heart skip a beat every day. I love you endlessly! Your smile lights up my world, and every moment with you is a treasure. You're my everything, my love, my forever Valentine. 💕
+        </div>
+        <div class="images">
+            <img class="image" src="c:\Users\Ramstore\Downloads\99e1d56c-fde3-47d4-bc39-75eb432eddf2.jpg" alt="Romantic Image 1">
+            <img class="image" src="c:\Users\Ramstore\Downloads\2.jpg" alt="Romantic Image 2">
+            <img class="image" src="c:\Users\Ramstore\Downloads\3.jpg" alt="Romantic Image 3">
+            <img class="image" src="c:\Users\Ramstore\Downloads\4.jpg" alt="Romantic Image 4">
+            <img class="image" src="c:\Users\Ramstore\Downloads\5.jpg" alt="Romantic Image 5">
+            <img class="image" src="c:\Users\Ramstore\Downloads\6.jpg" alt="Romantic Image 6">
+
+
+                <div class="heart" style="left: 10%;">❤️</div>
+                <div class="heart" style="left: 20%;">💖</div>
+                <div class="heart" style="left: 30%;">💕</div>
+                <div class="heart" style="left: 40%;">💗</div>
+                <div class="heart" style="left: 50%;">💓</div>
+                <div class="heart" style="left: 60%;">💘</div>
+                <div class="heart" style="left: 70%;">💞</div>
+                <div class="heart" style="left: 80%;">💝</div>
+                <div class="heart" style="left: 90%;">💟</div>
+        </div>
+        <!-- Music Player will be created dynamically -->
+    </div>
+<script>
+const yesBtn = document.getElementById('yes');
+const noBtn = document.getElementById('no');
+const message = document.getElementById('message');
+const firstPage = document.getElementById('first-page');
+const secondPage = document.getElementById('second-page');
+
+
+// NO button avoids click
+noBtn.addEventListener("mouseenter", () => {
+    const container = firstPage.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+
+    noBtn.style.position = "absolute";
+
+
+    let randomX = Math.random() * (container.width - btnRect.width);
+    let randomY = Math.random() * (container.height - btnRect.height);
+
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+});
+
+
+// YES button click
+yesBtn.addEventListener("click", () => {
+    firstPage.style.display = "none";
+    secondPage.style.display = "flex";
+
+
+    // Create audio element
+    const audio = document.createElement("audio");
+    audio.src = "https://www.youtube.com/watch?v=Pzy3wYBxyRc&list=RDPzy3wYBxyRc&start_radio=1&pp=ygURdGFrZSBhbGwgdGhlIGxvdmWgBwE%3D"; // Replace with your romantic mp3 URL
+    audio.autoplay = true;
+    audio.loop = true; // optional: loop the song
+    secondPage.appendChild(audio);
+});
+
+
+// If NO button is clicked
+noBtn.addEventListener("click", () => {
+    message.textContent = "That's okay, but I'll keep trying! 😘";
+    message.style.display = "block";
+});
+</script>
+
+
+
+
+</body>
+</html>
+
